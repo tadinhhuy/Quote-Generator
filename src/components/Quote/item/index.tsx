@@ -7,9 +7,7 @@ type Props = {
 const QuoteItem: React.FC<Props> = ({quote, authur}) => {
   return (
     <>
-      <div id="quote__item">
-        
-      </div>
+      <div id="quote__item"></div>
     </>
   );
 };
