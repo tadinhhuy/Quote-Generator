@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/quotes" component={QuoteGenerator} />
+        <Route exact path="/quotes" component={QuoteGenerator} />
       </Switch>
     </BrowserRouter>
   );

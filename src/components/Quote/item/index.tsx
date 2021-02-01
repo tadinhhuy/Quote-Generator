@@ -1,15 +1,23 @@
+import './style.scss';
 
 type Props = {
-  quote: String;
-  authur: String;  
-}
+  text: string;
+  author: string;
+};
 
-const QuoteItem: React.FC<Props> = ({quote, authur}) => {
+const QuoteItem: React.FC<Props> = ({ text, author }) => {
+  console.log("prop", text, author)
   return (
     <>
-      <div id="quote__item"></div>
+      <div className="quote__box">
+        <div className="quote__text">{text}</div>
+        <div className="quote__author">
+          <div className="quote__author--align">
+          - {author}
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 export default QuoteItem;
- 

@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import QuoteItem from '../../components/Quote/item';
+import './style.scss';
+import { getAllQuotes } from '../../services/quotes';
 
 const QuoteGenerator: React.FC = () => {
   const colors = [
@@ -18,13 +19,53 @@ const QuoteGenerator: React.FC = () => {
     '#73A857',
   ];
 
-  const [quotes, setQuotes] = useState([]);
-  const [color, setColor] = useState(colors);
+  const [quotesList, setQuotesList] = useState([]);
 
+  const [color, setColor] = useState('');
+
+  const [text, setText] = useState('');
+
+  const [author, setAuthor] = useState('');
+
+  const getRandomColor = (): number => {
+    return ~~(Math.random() * colors.length);
+  };
+
+  const getRandomQuote = (): number => {
+    return ~~(Math.random() * quotesList.length);
+  };
+
+  const setRandomQuote = (): void => {
+    const res: any = quotesList[getRandomQuote()];
+    const newColor = colors[getRandomColor()];
+    console.log("random quote", getRandomQuote());
+    console.log("res", res);
+    console.log("newColor", newColor)
+    setText(res?.quote);
+    setAuthor(res?.author);
+    setColor(newColor);
+  };
+
+  const handleCallApi = async () => {
+    const res = await getAllQuotes();
+    setQuotesList(res);
+  };
+  
+  useEffect(() => {
+    handleCallApi();
+  }, []);
+
+  useEffect(() => {
+    setRandomQuote();
+  }, []);
+
+ 
   return (
     <>
-      <div className="quotes__container">
-        <div></div>
+      {console.log('quotes', quotesList)}
+      <div style={{backgroundColor: color}} className="quotes__container">
+        {/* <div>Quote Generator</div> */}
+        <QuoteItem author={author} text={text} />
       </div>
     </>
   );

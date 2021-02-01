@@ -1,6 +1,6 @@
 import axios from 'axios';
-import ENDPOINTS from '@/constants/endpoints';
-import { hasFiles, objectToFormData } from '@/helpers/form';
+import ENDPOINTS from '../constants/endpoints';
+import { hasFiles, objectToFormData } from '../helpers/form';
 
 const instance = axios.create();
 
