@@ -48,11 +48,13 @@ const QuoteGenerator: React.FC = () => {
 
   const handleCallApi = async () => {
     const res = await getAllQuotes();
+    console.log(res);
     setQuotesList(res);
   };
   
   useEffect(() => {
     handleCallApi();
+    
   }, []);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const QuoteGenerator: React.FC = () => {
  
   return (
     <>
-      {console.log('quotes', quotesList)}
+      {console.log('quotes', text)}
       <div style={{backgroundColor: color}} className="quotes__container">
         {/* <div>Quote Generator</div> */}
         <QuoteItem author={author} text={text} />
