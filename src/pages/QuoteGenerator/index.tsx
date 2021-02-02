@@ -44,6 +44,7 @@ const QuoteGenerator: React.FC = () => {
     setText(res?.quote);
     setAuthor(res?.author);
     setColor(newColor);
+            
   };
 
   const handleCallApi = async () => {
