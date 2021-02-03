@@ -4,71 +4,60 @@ import './style.scss';
 import { getAllQuotes } from '../../services/quotes';
 
 const QuoteGenerator: React.FC = () => {
-  const colors = [
-    '#16a085',
-    '#27ae60',
-    '#2c3e50',
-    '#f39c12',
-    '#e74c3c',
-    '#9b59b6',
-    '#FB6964',
-    '#342224',
-    '#472E32',
-    '#BDBB99',
-    '#77B1A9',
-    '#73A857',
-  ];
+  const [quotesList, setQuotesList] = useState<object[]>([]);
 
-  const [quotesList, setQuotesList] = useState([]);
+  const [color, setColor] = useState<string>('');
 
-  const [color, setColor] = useState('');
+  const [text, setText] = useState<string>('');
 
-  const [text, setText] = useState('');
+  const [author, setAuthor] = useState<string>('');
 
-  const [author, setAuthor] = useState('');
+  useEffect(() => {
+    handleCallApi();
+  }, []);
 
-  const getRandomColor = (): number => {
-    return ~~(Math.random() * colors.length);
+  useEffect(() => {
+    handleRandomQuote();
+  }, [quotesList]);
+
+  const getRandomColor = (): string => {
+    const LETTERS = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += LETTERS[~~(Math.random() * LETTERS.length)];
+    }
+    return color;
   };
 
   const getRandomQuote = (): number => {
     return ~~(Math.random() * quotesList.length);
   };
 
-  const setRandomQuote = (): void => {
-    const res: any = quotesList[getRandomQuote()];
-    const newColor = colors[getRandomColor()];
-    console.log("random quote", getRandomQuote());
-    console.log("res", res);
-    console.log("newColor", newColor)
-    setText(res?.quote);
-    setAuthor(res?.author);
-    setColor(newColor);
-            
-  };
-
   const handleCallApi = async () => {
-    const res = await getAllQuotes();
-    console.log(res);
+    const res: any = await getAllQuotes();
     setQuotesList(res);
   };
-  
-  useEffect(() => {
-    handleCallApi();
-    
-  }, []);
 
-  useEffect(() => {
-    setRandomQuote();
-  }, []);
+  const handleRandomQuote = (): void => {
+    const newColor: string = getRandomColor();
+    const indexQuote: number = getRandomQuote();
 
- 
+    const quoteObj: any = quotesList[indexQuote];
+
+    setText(quoteObj?.quote);
+    setAuthor(quoteObj?.author);
+    setColor(newColor);
+  };
+
   return (
     <>
-      {console.log('quotes', text)}
-      <div style={{backgroundColor: color}} className="quotes__container">
-        {/* <div>Quote Generator</div> */}
-        <QuoteItem author={author} text={text} />
+      <div style={{ backgroundColor: color }} className="quotes__container">
+        <QuoteItem
+          author={author}
+          getNewQuote={handleRandomQuote}
+          color={color}
+          text={text}
+        />
       </div>
     </>
   );
