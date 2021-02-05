@@ -2,7 +2,11 @@ import axios from 'axios';
 import ENDPOINTS from '../constants/endpoints';
 import { hasFiles, objectToFormData } from '../helpers/form';
 
-const instance = axios.create();
+const instance = axios.create({
+  headers: {
+    Accept: 'application/json',
+  },
+});
 
 // add a request interceptor
 instance.interceptors.request.use((config) => {
