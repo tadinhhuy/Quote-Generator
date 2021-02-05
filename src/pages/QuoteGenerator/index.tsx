@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import QuoteItem from '../../components/Quote/item';
 import './style.scss';
 import { getAllQuotes } from '../../services/quotes';
@@ -11,6 +11,8 @@ const QuoteGenerator: React.FC = () => {
   const [text, setText] = useState<string>('');
 
   const [author, setAuthor] = useState<string>('');
+
+  const quoteItemRef = useRef(null);
 
   useEffect(() => {
     handleCallApi();
