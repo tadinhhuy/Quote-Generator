@@ -1,0 +1,11 @@
+.fade-in-text {
+  animation: fade-in-text 2s;
+}
+@keyframes fade-in-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

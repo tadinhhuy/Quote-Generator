@@ -1,3 +1,4 @@
+import { RefObject, useRef } from 'react';
 import './style.scss';
 
 type Props = {
@@ -5,18 +6,28 @@ type Props = {
   author: string;
   color: string;
   getNewQuote: () => void;
+  quoteItemRef?: RefObject<HTMLDivElement>;
 };
 
-const QuoteItem: React.FC<Props> = ({ text, author, color, getNewQuote }) => {
+const QuoteItem: React.FC<Props> = ({
+  text,
+  author,
+  color,
+  getNewQuote,
+  quoteItemRef,
+}) => {
   return (
     <>
+      {console.log('', quoteItemRef)}
       <div className="quote__box">
-        <div className="quote__text" style={{ color: color }}>
-          {text}
-        </div>
-        <div className="quote__author">
-          <div className="quote__author--align" style={{ color: color }}>
-            {author}
+        <div ref={quoteItemRef} className="quote__content">
+          <div className="quote__content__text" style={{ color: color }}>
+            {text}
+          </div>
+          <div className="quote__content__author">
+            <div className="quote__author--align" style={{ color: color }}>
+              {author}
+            </div>
           </div>
         </div>
         <div className="quote__footer">
