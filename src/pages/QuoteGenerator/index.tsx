@@ -12,7 +12,9 @@ const QuoteGenerator: React.FC = () => {
 
   const [author, setAuthor] = useState<string>('');
 
-  const quoteItemRef = useRef(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const quoteItemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     handleCallApi();
@@ -36,8 +38,14 @@ const QuoteGenerator: React.FC = () => {
   };
 
   const handleCallApi = async () => {
-    const res: any = await getAllQuotes();
-    setQuotesList(res);
+    try {
+      const res: any = await getAllQuotes();
+      setQuotesList(res);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRandomQuote = (): void => {
@@ -54,12 +62,17 @@ const QuoteGenerator: React.FC = () => {
   return (
     <>
       <div style={{ backgroundColor: color }} className="quotes__container">
-        <QuoteItem
-          author={author}
-          getNewQuote={handleRandomQuote}
-          color={color}
-          text={text}
-        />
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <QuoteItem
+            author={author}
+            getNewQuote={handleRandomQuote}
+            color={color}
+            text={text}
+            quoteItemRef={quoteItemRef}
+          />
+        )}
       </div>
     </>
   );
