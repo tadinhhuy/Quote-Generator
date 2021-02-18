@@ -1,32 +1,32 @@
-import { RefObject, useRef } from 'react';
+import { RefObject } from 'react';
 import './style.scss';
 
 type Props = {
-  text: string;
-  author: string;
+  quote: any;
   color: string;
   getNewQuote: () => void;
-  quoteItemRef?: RefObject<HTMLDivElement>;
+  quoteRef?: RefObject<HTMLDivElement>;
 };
 
 const QuoteItem: React.FC<Props> = ({
-  text,
-  author,
   color,
   getNewQuote,
-  quoteItemRef,
+  quoteRef,
+  quote,
 }) => {
   return (
     <>
-      {console.log('', quoteItemRef)}
       <div className="quote__box">
-        <div ref={quoteItemRef} className="quote__content">
+        <div ref={quoteRef} className="quote__content">
           <div className="quote__content__text" style={{ color: color }}>
-            {text}
+            {quote?.quote}
           </div>
           <div className="quote__content__author">
-            <div className="quote__author--align" style={{ color: color }}>
-              {author}
+            <div
+              className="quote__content__author--align"
+              style={{ color: color }}
+            >
+              {quote?.author}
             </div>
           </div>
         </div>

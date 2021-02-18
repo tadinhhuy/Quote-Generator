@@ -6,23 +6,17 @@ import { getAllQuotes } from '../../services/quotes';
 const QuoteGenerator: React.FC = () => {
   const [quotesList, setQuotesList] = useState<object[]>([]);
 
+  const [quote, setQuote] = useState<object>({});
+
   const [color, setColor] = useState<string>('');
-
-  const [text, setText] = useState<string>('');
-
-  const [author, setAuthor] = useState<string>('');
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const quoteItemRef = useRef<HTMLDivElement>(null);
+  const quoteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     handleCallApi();
   }, []);
-
-  useEffect(() => {
-    handleRandomQuote();
-  }, [quotesList]);
 
   const getRandomColor = (): string => {
     const LETTERS = '0123456789ABCDEF';
@@ -40,6 +34,7 @@ const QuoteGenerator: React.FC = () => {
   const handleCallApi = async () => {
     try {
       const res: any = await getAllQuotes();
+      handleRandomQuote(res);
       setQuotesList(res);
     } catch (error) {
       console.error(error);
@@ -48,14 +43,29 @@ const QuoteGenerator: React.FC = () => {
     }
   };
 
-  const handleRandomQuote = (): void => {
+  const handleRandomQuote = (quote?: any): void => {
+    quoteRef.current?.animate(
+      [
+        { opacity: 0, transition: 500 },
+        { opacity: 1, transition: 500 },
+      ],
+      {
+        duration: 1500,
+        easing: 'ease-in-out',
+      }
+    );
+
     const newColor: string = getRandomColor();
     const indexQuote: number = getRandomQuote();
 
-    const quoteObj: any = quotesList[indexQuote];
+    const isQuotesListEmpty =
+      quotesList !== undefined && quotesList.length === 0;
 
-    setText(quoteObj?.quote);
-    setAuthor(quoteObj?.author);
+    const quoteObj: any = isQuotesListEmpty
+      ? quote[indexQuote]
+      : quotesList[indexQuote];
+
+    setQuote(quoteObj);
     setColor(newColor);
   };
 
@@ -66,11 +76,10 @@ const QuoteGenerator: React.FC = () => {
           <div>Loading...</div>
         ) : (
           <QuoteItem
-            author={author}
+            quote={quote}
             getNewQuote={handleRandomQuote}
             color={color}
-            text={text}
-            quoteItemRef={quoteItemRef}
+            quoteRef={quoteRef}
           />
         )}
       </div>
