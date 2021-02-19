@@ -31,11 +31,11 @@ const QuoteGenerator: React.FC = () => {
     return ~~(Math.random() * quotesList.length);
   };
 
-  const handleCallApi = async () => {
+  const handleCallApi = async (): Promise<void> => {
     try {
-      const res: any = await getAllQuotes();
-      handleRandomQuote(res);
-      setQuotesList(res);
+      const quotes: object[] = await getAllQuotes();
+      handleRandomQuote(quotes);
+      setQuotesList(quotes);
     } catch (error) {
       console.error(error);
     } finally {
@@ -43,7 +43,7 @@ const QuoteGenerator: React.FC = () => {
     }
   };
 
-  const handleRandomQuote = (quote?: any): void => {
+  const handleRandomQuote = (quoteParam?: any): void => {
     quoteRef.current?.animate(
       [
         { opacity: 0, transition: 500 },
@@ -58,11 +58,11 @@ const QuoteGenerator: React.FC = () => {
     const newColor: string = getRandomColor();
     const indexQuote: number = getRandomQuote();
 
-    const isQuotesListEmpty =
+    const isQuotesListEmpty: boolean =
       quotesList !== undefined && quotesList.length === 0;
 
-    const quoteObj: any = isQuotesListEmpty
-      ? quote[indexQuote]
+    const quoteObj: object = isQuotesListEmpty
+      ? quoteParam[indexQuote]
       : quotesList[indexQuote];
 
     setQuote(quoteObj);

@@ -2,7 +2,10 @@ import { RefObject } from 'react';
 import './style.scss';
 
 type Props = {
-  quote: any;
+  quote: {
+    quote?: string;
+    author?: string;
+  };
   color: string;
   getNewQuote: () => void;
   quoteRef?: RefObject<HTMLDivElement>;

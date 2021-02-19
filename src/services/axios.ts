@@ -1,15 +1,15 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import ENDPOINTS from '../constants/endpoints';
 import { hasFiles, objectToFormData } from '../helpers/form';
 
-const instance = axios.create({
+const instance: AxiosInstance = axios.create({
   headers: {
     Accept: 'application/json',
   },
 });
 
 // add a request interceptor
-instance.interceptors.request.use((config) => {
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
   // set base url
   if (ENDPOINTS.BASE_URL) {
     config.baseURL = ENDPOINTS.BASE_URL;
@@ -31,16 +31,11 @@ instance.interceptors.request.use((config) => {
 
 // add a response interceptor
 instance.interceptors.response.use(
-  (response) => {
-    // return raw response
-    if (response.config.raw) {
-      return response;
-    }
+  (response: AxiosResponse) => {
 
-    // extract data and return
-    return response.data;
+    return response;
   },
-  (error) => {
+  (error: any) => {
     // do something on error
 
     return Promise.reject(error);
