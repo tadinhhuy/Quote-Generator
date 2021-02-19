@@ -1,10 +1,11 @@
 import axios from './axios';
 import CONSTANTS from '../constants/endpoints';
 
-const getAllQuotes = async() => {
+
+const getAllQuotes = async (): Promise<object[]> => {
   try {
-    const { quotes } = await axios.get(CONSTANTS.BASE_URL);
-    return quotes;
+    const { data }: any = await axios.get(CONSTANTS.QUOTES);
+    return data?.quotes;
   } catch (error) {
     console.error(error);
     throw error;
