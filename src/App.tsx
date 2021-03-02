@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import QuoteGenerator from './pages/QuoteGenerator';
+import router from './router';
+
+interface IRoute {
+  path?: string;
+  component?: any;
+  exact?: boolean;
+}
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/quotes" component={QuoteGenerator} />
+        {router.map((router: IRoute) => {
+          return (
+            <Route
+              exact={router.exact}
+              path={router.path}
+              component={router.component}
+            />
+          );
+        })}
       </Switch>
     </BrowserRouter>
   );
