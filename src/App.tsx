@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import router from './router';
@@ -13,9 +12,10 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {router.map((router: IRoute) => {
+        {router.map((router: IRoute, index: number) => {
           return (
             <Route
+              key={index}
               exact={router.exact}
               path={router.path}
               component={router.component}

@@ -1,7 +1,5 @@
-import { type } from "os";
 import LogIn from "../pages/auth/login";
 import QuoteGenerator from "../pages/QuoteGenerator";
-
 
 const router: object[] = [
   {
@@ -10,7 +8,7 @@ const router: object[] = [
     exact: true
   },
   {
-    path: '/login',
+    path: '/',
     component: LogIn,
     exact: true
   }
